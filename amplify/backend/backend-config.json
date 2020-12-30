@@ -6,5 +6,23 @@
       "dependsOn": [],
       "customAuth": false
     }
+  },
+  "api": {
+    "blogreact": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 300,
+              "description": "blog react demo"
+            }
+          },
+          "additionalAuthenticationProviders": []
+        }
+      }
+    }
   }
 }
