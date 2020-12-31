@@ -13,9 +13,10 @@ type Comment @model {
   id: ID!
   commentOwnerId: String!
   commentOwnerUsername: String!
-  post: Post @connection(name: "PostComments")
   content: String!
   createdAt: String!
+  post: Post @connection(name: "PostComments")
+  replies: [Reply] @connection(name: "CommentReplies")
 }
 
 type Like @model {
@@ -24,4 +25,13 @@ type Like @model {
   likeOwnerId: String!
   likeOwnerUsername: String!
   post: Post @connection(name: "PostLikes")
+}
+
+type Reply @model {
+  id: ID!
+  replyOwnerId: String!
+  replyOwnerUsername: String!
+  comment: Comment @connection(name: "CommentReplies")
+  content: String!
+  createdAt: String!
 }

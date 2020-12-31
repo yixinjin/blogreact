@@ -3,7 +3,7 @@ import {listPosts} from '../graphql/queries';
 import {API, Auth, graphqlOperation} from 'aws-amplify';
 import DeletePost from "./DeletePost";
 import EditPost from "./EditPost";
-import {onCreatePost, onDeletePost, onUpdatePost, onCreateComment} from "../graphql/subscriptions";
+import {onCreatePost, onDeletePost, onUpdatePost, onCreateComment, onCreateReply} from "../graphql/subscriptions";
 import CreateComment from "./comment/CreateComment";
 import CommentDetail from "./comment/CommentDetail";
 
@@ -56,6 +56,28 @@ class DisplayPosts extends Component {
           for (let post of posts) {
             if (createdComment.post.id === post.id) {
               post.comments.items.push(createdComment)
+            }
+          }
+          this.setState({posts})
+        }
+      })
+
+    this.createReplyListener = API.graphql(graphqlOperation(onCreateReply))
+      .subscribe({
+        next: replyData => {
+          const createdReply = replyData.value.data.onCreateReply
+          let posts = [...this.state.posts]
+
+          for (let post of posts) {
+            let comments = post.comments.items
+
+            if (comments !== undefined && comments.length > 0) {
+              for (let comment of comments) {
+                console.log(comment);
+                if (createdReply.comment.id === comment.id) {
+                  comment.replies.items.push(createdReply)
+                }
+              }
             }
           }
           this.setState({posts})
@@ -122,10 +144,9 @@ class DisplayPosts extends Component {
           </span>
           <span>
             <CreateComment postId={post.id} />
-            {/*Display comments*/}
+            {/*/!*Display comments*!/*/}
             {post.comments.items.length > 0 && <span style={{fontSize:"19px", color:"gray"}}> Comments:</span>}
             {post.comments.items.map((comment, index) => <CommentDetail key={index} commentDetail={comment}/>)}
-
 
           </span>
         </div>

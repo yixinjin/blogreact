@@ -17,6 +17,32 @@ export const getPost = /* GraphQL */ `
           commentOwnerUsername
           content
           createdAt
+          post {
+            id
+            postOwnerId
+            postOwnerUsername
+            postTitle
+            postBody
+            createdAt
+            updatedAt
+          }
+          replies {
+            items {
+              id
+              replyOwnerId
+              replyOwnerUsername
+              content
+              createdAt
+              comment {
+                id
+                commentOwnerId
+                commentOwnerUsername
+                content
+                createdAt
+                updatedAt
+              }
+            nextToken
+          }
           updatedAt
         }
         nextToken
@@ -27,6 +53,15 @@ export const getPost = /* GraphQL */ `
           numberLikes
           likeOwnerId
           likeOwnerUsername
+          post {
+            id
+            postOwnerId
+            postOwnerUsername
+            postTitle
+            postBody
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
         }
@@ -57,14 +92,28 @@ export const listPosts = /* GraphQL */ `
             commentOwnerUsername
             content
             createdAt
+            updatedAt
+            replies {
+              items {
+                id
+                replyOwnerId
+                replyOwnerUsername
+                content
+                createdAt
+                updatedAt
+              }
+            }
           }
           nextToken
         }
         likes {
-            items {
+          items {
             id
+            numberLikes
             likeOwnerId
             likeOwnerUsername
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -80,6 +129,8 @@ export const getComment = /* GraphQL */ `
       id
       commentOwnerId
       commentOwnerUsername
+      content
+      createdAt
       post {
         id
         postOwnerId
@@ -88,15 +139,48 @@ export const getComment = /* GraphQL */ `
         postBody
         createdAt
         comments {
+          items {
+            id
+            commentOwnerId
+            commentOwnerUsername
+            content
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         likes {
+          items {
+            id
+            numberLikes
+            likeOwnerId
+            likeOwnerUsername
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         updatedAt
       }
-      content
-      createdAt
+      replies {
+        items {
+          id
+          replyOwnerId
+          replyOwnerUsername
+          comment {
+            id
+            commentOwnerId
+            commentOwnerUsername
+            content
+            createdAt
+            updatedAt
+          }
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -112,6 +196,8 @@ export const listComments = /* GraphQL */ `
         id
         commentOwnerId
         commentOwnerUsername
+        content
+        createdAt
         post {
           id
           postOwnerId
@@ -119,10 +205,25 @@ export const listComments = /* GraphQL */ `
           postTitle
           postBody
           createdAt
+          comments {
+            nextToken
+          }
+          likes {
+            nextToken
+          }
           updatedAt
         }
-        content
-        createdAt
+        replies {
+          items {
+            id
+            replyOwnerId
+            replyOwnerUsername
+            content
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -144,9 +245,25 @@ export const getLike = /* GraphQL */ `
         postBody
         createdAt
         comments {
+          items {
+            id
+            commentOwnerId
+            commentOwnerUsername
+            content
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         likes {
+          items {
+            id
+            numberLikes
+            likeOwnerId
+            likeOwnerUsername
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         updatedAt
@@ -175,8 +292,99 @@ export const listLikes = /* GraphQL */ `
           postTitle
           postBody
           createdAt
+          comments {
+            nextToken
+          }
+          likes {
+            nextToken
+          }
           updatedAt
         }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getReply = /* GraphQL */ `
+  query GetReply($id: ID!) {
+    getReply(id: $id) {
+      id
+      replyOwnerId
+      replyOwnerUsername
+      comment {
+        id
+        commentOwnerId
+        commentOwnerUsername
+        content
+        createdAt
+        post {
+          id
+          postOwnerId
+          postOwnerUsername
+          postTitle
+          postBody
+          createdAt
+          comments {
+            nextToken
+          }
+          likes {
+            nextToken
+          }
+          updatedAt
+        }
+        replies {
+          items {
+            id
+            replyOwnerId
+            replyOwnerUsername
+            content
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        updatedAt
+      }
+      content
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listReplys = /* GraphQL */ `
+  query ListReplys(
+    $filter: ModelReplyFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listReplys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        replyOwnerId
+        replyOwnerUsername
+        comment {
+          id
+          commentOwnerId
+          commentOwnerUsername
+          content
+          createdAt
+          post {
+            id
+            postOwnerId
+            postOwnerUsername
+            postTitle
+            postBody
+            createdAt
+            updatedAt
+          }
+          replies {
+            nextToken
+          }
+          updatedAt
+        }
+        content
         createdAt
         updatedAt
       }

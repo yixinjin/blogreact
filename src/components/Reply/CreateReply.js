@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import {API, graphqlOperation, Auth} from 'aws-amplify';
-import {createComment} from '../../graphql/mutations';
+import {createReply} from '../../graphql/mutations';
 
-class CreateComment extends Component {
+class CreateReply extends Component {
 
   state = {
-    commentOwnerId: "",
-    commentOwnerUsername: "",
+    replyOwnerId: "",
+    replyOwnerUsername: "",
     content: ""
   }
 
@@ -24,22 +24,18 @@ class CreateComment extends Component {
     [event.target.name]: event.target.value
   })
 
-  handleAddComment = async event => {
+  handleAddReply = async event => {
     event.preventDefault();
 
-    // alert(this.props.postId);
     const input = {
-      // commentPostId is kinda weird, you cannot find the definition
-      // in the mutation, but this point to the post that this comment belongs to
-      // it actually means postId, but you cannot call it postId in the input object.
-      commentPostId: this.props.postId,
-      commentOwnerId: this.state.commentOwnerId,
-      commentOwnerUsername: this.state.commentOwnerUsername,
+      replyCommentId: this.props.commentId,
+      replyOwnerId: this.state.commentOwnerId,
+      replyOwnerUsername: this.state.commentOwnerUsername,
       content: this.state.content,
       createdAt: new Date().toISOString()
     }
 
-    await API.graphql(graphqlOperation(createComment, {input}));
+    await API.graphql(graphqlOperation(createReply, {input}));
 
     this.setState({
       content: "",
@@ -49,24 +45,22 @@ class CreateComment extends Component {
   render() {
     return (
       <form className="add-comment"
-        onSubmit={this.handleAddComment}
+        onSubmit={this.handleAddReply}
       >
         <textarea
           type="text"
           name="content"
-          rows="3"
-          cols="80"
+          rows="2"
+          cols="40"
           required
-          placeholder="Add your comment"
+          placeholder="Add your reply"
           value={this.state.content}
           onChange={this.handleChangeContent}
         />
 
-        <input className="commentButton"
+        <input className="replyButton"
           type="submit"
-          size="10"
-          style={{font: '17px'}}
-          value="Add Comment"
+          value="Reply"
         />
 
       </form>
@@ -74,4 +68,4 @@ class CreateComment extends Component {
   }
 }
 
-export default CreateComment;
+export default CreateReply;

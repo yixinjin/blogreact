@@ -70,9 +70,8 @@ class CreatePost extends Component {
           onChange={this.handleChangePost}
         />
 
-        <input
+        <input className="submitButton"
           type="submit"
-          className="btn"
           style={{font: '19px'}}
         />
 

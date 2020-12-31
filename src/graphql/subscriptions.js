@@ -17,6 +17,18 @@ export const onCreatePost = /* GraphQL */ `
           commentOwnerUsername
           content
           createdAt
+          post {
+            id
+            postOwnerId
+            postOwnerUsername
+            postTitle
+            postBody
+            createdAt
+            updatedAt
+          }
+          replies {
+            nextToken
+          }
           updatedAt
         }
         nextToken
@@ -27,6 +39,15 @@ export const onCreatePost = /* GraphQL */ `
           numberLikes
           likeOwnerId
           likeOwnerUsername
+          post {
+            id
+            postOwnerId
+            postOwnerUsername
+            postTitle
+            postBody
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
         }
@@ -52,6 +73,18 @@ export const onUpdatePost = /* GraphQL */ `
           commentOwnerUsername
           content
           createdAt
+          post {
+            id
+            postOwnerId
+            postOwnerUsername
+            postTitle
+            postBody
+            createdAt
+            updatedAt
+          }
+          replies {
+            nextToken
+          }
           updatedAt
         }
         nextToken
@@ -62,6 +95,15 @@ export const onUpdatePost = /* GraphQL */ `
           numberLikes
           likeOwnerId
           likeOwnerUsername
+          post {
+            id
+            postOwnerId
+            postOwnerUsername
+            postTitle
+            postBody
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
         }
@@ -87,6 +129,18 @@ export const onDeletePost = /* GraphQL */ `
           commentOwnerUsername
           content
           createdAt
+          post {
+            id
+            postOwnerId
+            postOwnerUsername
+            postTitle
+            postBody
+            createdAt
+            updatedAt
+          }
+          replies {
+            nextToken
+          }
           updatedAt
         }
         nextToken
@@ -97,6 +151,15 @@ export const onDeletePost = /* GraphQL */ `
           numberLikes
           likeOwnerId
           likeOwnerUsername
+          post {
+            id
+            postOwnerId
+            postOwnerUsername
+            postTitle
+            postBody
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
         }
@@ -112,6 +175,8 @@ export const onCreateComment = /* GraphQL */ `
       id
       commentOwnerId
       commentOwnerUsername
+      content
+      createdAt
       post {
         id
         postOwnerId
@@ -120,15 +185,48 @@ export const onCreateComment = /* GraphQL */ `
         postBody
         createdAt
         comments {
+          items {
+            id
+            commentOwnerId
+            commentOwnerUsername
+            content
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         likes {
+          items {
+            id
+            numberLikes
+            likeOwnerId
+            likeOwnerUsername
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         updatedAt
       }
-      content
-      createdAt
+      replies {
+        items {
+          id
+          replyOwnerId
+          replyOwnerUsername
+          comment {
+            id
+            commentOwnerId
+            commentOwnerUsername
+            content
+            createdAt
+            updatedAt
+          }
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -139,6 +237,8 @@ export const onUpdateComment = /* GraphQL */ `
       id
       commentOwnerId
       commentOwnerUsername
+      content
+      createdAt
       post {
         id
         postOwnerId
@@ -147,15 +247,48 @@ export const onUpdateComment = /* GraphQL */ `
         postBody
         createdAt
         comments {
+          items {
+            id
+            commentOwnerId
+            commentOwnerUsername
+            content
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         likes {
+          items {
+            id
+            numberLikes
+            likeOwnerId
+            likeOwnerUsername
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         updatedAt
       }
-      content
-      createdAt
+      replies {
+        items {
+          id
+          replyOwnerId
+          replyOwnerUsername
+          comment {
+            id
+            commentOwnerId
+            commentOwnerUsername
+            content
+            createdAt
+            updatedAt
+          }
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -166,6 +299,8 @@ export const onDeleteComment = /* GraphQL */ `
       id
       commentOwnerId
       commentOwnerUsername
+      content
+      createdAt
       post {
         id
         postOwnerId
@@ -174,15 +309,48 @@ export const onDeleteComment = /* GraphQL */ `
         postBody
         createdAt
         comments {
+          items {
+            id
+            commentOwnerId
+            commentOwnerUsername
+            content
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         likes {
+          items {
+            id
+            numberLikes
+            likeOwnerId
+            likeOwnerUsername
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         updatedAt
       }
-      content
-      createdAt
+      replies {
+        items {
+          id
+          replyOwnerId
+          replyOwnerUsername
+          comment {
+            id
+            commentOwnerId
+            commentOwnerUsername
+            content
+            createdAt
+            updatedAt
+          }
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -202,9 +370,25 @@ export const onCreateLike = /* GraphQL */ `
         postBody
         createdAt
         comments {
+          items {
+            id
+            commentOwnerId
+            commentOwnerUsername
+            content
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         likes {
+          items {
+            id
+            numberLikes
+            likeOwnerId
+            likeOwnerUsername
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         updatedAt
@@ -229,9 +413,25 @@ export const onUpdateLike = /* GraphQL */ `
         postBody
         createdAt
         comments {
+          items {
+            id
+            commentOwnerId
+            commentOwnerUsername
+            content
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         likes {
+          items {
+            id
+            numberLikes
+            likeOwnerId
+            likeOwnerUsername
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         updatedAt
@@ -256,13 +456,167 @@ export const onDeleteLike = /* GraphQL */ `
         postBody
         createdAt
         comments {
+          items {
+            id
+            commentOwnerId
+            commentOwnerUsername
+            content
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         likes {
+          items {
+            id
+            numberLikes
+            likeOwnerId
+            likeOwnerUsername
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         updatedAt
       }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateReply = /* GraphQL */ `
+  subscription OnCreateReply {
+    onCreateReply {
+      id
+      replyOwnerId
+      replyOwnerUsername
+      comment {
+        id
+        commentOwnerId
+        commentOwnerUsername
+        content
+        createdAt
+        post {
+          id
+          postOwnerId
+          postOwnerUsername
+          postTitle
+          postBody
+          createdAt
+          comments {
+            nextToken
+          }
+          likes {
+            nextToken
+          }
+          updatedAt
+        }
+        replies {
+          items {
+            id
+            replyOwnerId
+            replyOwnerUsername
+            content
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        updatedAt
+      }
+      content
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateReply = /* GraphQL */ `
+  subscription OnUpdateReply {
+    onUpdateReply {
+      id
+      replyOwnerId
+      replyOwnerUsername
+      comment {
+        id
+        commentOwnerId
+        commentOwnerUsername
+        content
+        createdAt
+        post {
+          id
+          postOwnerId
+          postOwnerUsername
+          postTitle
+          postBody
+          createdAt
+          comments {
+            nextToken
+          }
+          likes {
+            nextToken
+          }
+          updatedAt
+        }
+        replies {
+          items {
+            id
+            replyOwnerId
+            replyOwnerUsername
+            content
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        updatedAt
+      }
+      content
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteReply = /* GraphQL */ `
+  subscription OnDeleteReply {
+    onDeleteReply {
+      id
+      replyOwnerId
+      replyOwnerUsername
+      comment {
+        id
+        commentOwnerId
+        commentOwnerUsername
+        content
+        createdAt
+        post {
+          id
+          postOwnerId
+          postOwnerUsername
+          postTitle
+          postBody
+          createdAt
+          comments {
+            nextToken
+          }
+          likes {
+            nextToken
+          }
+          updatedAt
+        }
+        replies {
+          items {
+            id
+            replyOwnerId
+            replyOwnerUsername
+            content
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        updatedAt
+      }
+      content
       createdAt
       updatedAt
     }
