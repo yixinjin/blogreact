@@ -41,14 +41,15 @@ input[type=text], select {
 }
 
 input[type=submit] {
-  width: 100%;
+  width: 20%;
   background-color: #4CAF50;
   color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
+  padding: 12px 15px;
+  margin: 4px 10px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  float: right;
 }
 
 input[type=submit]:hover {
@@ -83,9 +84,8 @@ input[type=submit]:hover {
 .modal{
   position: absolute;
   top:40px;
-  right: 200px;
-  width: 60%;
-  height: 40%;
+  width: 600px;
+  height: 350px;
   box-shadow: 4px 4px 4px rgb(114, 116, 114);
   animation: move .2s backwards;
 }

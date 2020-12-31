@@ -5,7 +5,7 @@ type Post @model {
   postTitle: String!
   postBody: String!
   createdAt: String
-  comments: [Comment] @connection(name: "PostComments") #relationship
+  comments: [Comment] @connection(name: "PostComments")
   likes: [Like] @connection(name: "PostLikes")
 }
 
